@@ -45,4 +45,4 @@
 2. 安装Android SDK；
 3. 准备好一部已经打开开发者模式的Android手机；
 4. 修改com.skyline.wxjumphack.Hack中ADB_PATH，将其改为你自己的ADB位置；
-5. 运行程序吧，少年；
+5. 运行程序吧，骚年；
