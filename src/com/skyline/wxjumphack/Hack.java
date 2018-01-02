@@ -59,10 +59,10 @@ public class Hack {
                             }
                         }
                         System.out.println("find nextCenter, succ, (" + centerX + ", " + centerY + ")");
-                        int distance = (int) (Math.sqrt((centerX - myPos[0]) * (centerX - myPos[0]) + (centerY - myPos[1]) * (centerY - myPos[1])) * 1.386);
+                        int distance = (int) (Math.sqrt((centerX - myPos[0]) * (centerX - myPos[0]) + (centerY - myPos[1]) * (centerY - myPos[1])) * 1.392);
                         System.out.println("distance: " + distance);
                         System.out.println(ADB_PATH + " shell input swipe 100 100 100 100 " + distance);
-                        Runtime.getRuntime().exec(ADB_PATH + " shell input swipe 100 100 100 100 " + distance);
+                        Runtime.getRuntime().exec(ADB_PATH + " shell input swipe 300 300 400 400 " + distance);
 
                     }
                 } else {
