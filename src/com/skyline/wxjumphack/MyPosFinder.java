@@ -42,7 +42,7 @@ public class MyPosFinder {
                 }
             }
         }
-        ret[0] = (maxX + minX) / 2;
+        ret[0] = (maxX + minX) / 2 +3;
         ret[1] = maxY;
         System.out.println(maxX + ", " + minX);
         System.out.println("pos, x: " + ret[0] + ", y: " + ret[1]);

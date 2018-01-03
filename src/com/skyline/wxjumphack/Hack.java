@@ -14,7 +14,7 @@ public class Hack {
     /**
      * 弹跳系数，如果是720分辨率，请修改为2.05来试试。
      */
-    static final float JUMP_RATIO = 1.385f;
+    static final double JUMP_RATIO = 1.383f;
 
     public static void main(String... strings) {
 
@@ -26,6 +26,7 @@ public class Hack {
         MyPosFinder myPosFinder = new MyPosFinder();
         NextCenterFinder nextCenterFinder = new NextCenterFinder();
         WhitePointFinder whitePointFinder = new WhitePointFinder();
+        double jumpRatio = 0;
         for (int i = 0; i < 2048; i++) {
             try {
                 File file = new File(srcDir, i + ".png");
@@ -39,6 +40,9 @@ public class Hack {
 
                 System.out.println("screenshot, file: " + file.getAbsolutePath());
                 BufferedImage image = ImgLoader.load(file.getAbsolutePath());
+                if (jumpRatio == 0) {
+                    jumpRatio = JUMP_RATIO * 1080 / image.getWidth();
+                }
                 int[] myPos = myPosFinder.find(image);
                 if (myPos != null) {
                     System.out.println("find myPos, succ, (" + myPos[0] + ", " + myPos[1] + ")");
@@ -64,11 +68,10 @@ public class Hack {
                             }
                         }
                         System.out.println("find nextCenter, succ, (" + centerX + ", " + centerY + ")");
-                        int distance = (int) (Math.sqrt((centerX - myPos[0]) * (centerX - myPos[0]) + (centerY - myPos[1]) * (centerY - myPos[1])) * JUMP_RATIO);
+                        int distance = (int) (Math.sqrt((centerX - myPos[0]) * (centerX - myPos[0]) + (centerY - myPos[1]) * (centerY - myPos[1])) * jumpRatio);
                         System.out.println("distance: " + distance);
                         System.out.println(ADB_PATH + " shell input swipe 400 400 400 400 " + distance);
                         Runtime.getRuntime().exec(ADB_PATH + " shell input swipe 300 300 400 400 " + distance);
-
                     }
                 } else {
                     System.err.println("find myPos, fail");
