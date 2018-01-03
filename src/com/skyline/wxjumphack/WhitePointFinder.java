@@ -19,6 +19,11 @@ public class WhitePointFinder {
         int width = image.getWidth();
         int height = image.getHeight();
 
+        x1 = Integer.max(x1, 0);
+        x2 = Integer.min(x2, width - 1);
+        y1 = Integer.max(y1, 0);
+        y2 = Integer.min(y2, height - 1);
+
         for (int i = x1; i <= x2; i++) {
             for (int j = y1; j <= y2; j++) {
                 int pixel = image.getRGB(i, j);
@@ -36,9 +41,9 @@ public class WhitePointFinder {
                     int minY = Integer.MAX_VALUE;
                     while (!queue.isEmpty()) {
                         pos = queue.poll();
-                        int x=pos[0];
-                        int y=pos[1];
-                        if (x< x1 || x> x2 || y < y1 || y> y2 || vMap[x][y]) {
+                        int x = pos[0];
+                        int y = pos[1];
+                        if (x < x1 || x > x2 || y < y1 || y > y2 || vMap[x][y]) {
                             continue;
                         }
                         vMap[x][y] = true;
@@ -58,7 +63,7 @@ public class WhitePointFinder {
                         }
                     }
 
-                    System.out.println("whitePoint: "+maxX+", "+minX+", "+maxY+", "+minY);
+                    System.out.println("whitePoint: " + maxX + ", " + minX + ", " + maxY + ", " + minY);
                     if (maxX - minX <= 45 && maxX - minX >= 35 && maxY - minY <= 30 && maxY - minY >= 20) {
                         int[] ret = {(minX + maxX) / 2, (minY + maxY) / 2};
                         return ret;
@@ -76,7 +81,6 @@ public class WhitePointFinder {
         int[] ret = {i, j};
         return ret;
     }
-
 
 
 }

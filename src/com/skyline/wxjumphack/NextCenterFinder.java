@@ -105,7 +105,7 @@ public class NextCenterFinder {
             if (i >= exceptedX[0] && i <= exceptedX[1]) {
                 continue;
             }
-            if(j>=maxY){
+            if (j >= maxY) {
                 continue;
             }
 
@@ -163,10 +163,14 @@ public class NextCenterFinder {
         String imgsDesc = root + "imgs/next_center";
         File srcDir = new File(imgsSrc);
         System.out.println(srcDir);
+        long cost = 0;
         for (File file : srcDir.listFiles()) {
             System.out.println(file);
             BufferedImage img = ImgLoader.load(file.getAbsolutePath());
-            int[] pos = t.find(img, excepted,2000);
+            long t1 = System.nanoTime();
+            int[] pos = t.find(img, excepted, 2000);
+            long t2 = System.nanoTime();
+            cost += (t2 - t1);
             BufferedImage desc = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
             Graphics g = desc.getGraphics();
             g.drawImage(img, 0, 0, img.getWidth(), img.getHeight(), null);
@@ -186,6 +190,7 @@ public class NextCenterFinder {
             }
             ImageIO.write(desc, "png", descFile);
         }
+        System.out.println("avg time cost: " + (cost / srcDir.listFiles().length / 1_000_000));
 
     }
 

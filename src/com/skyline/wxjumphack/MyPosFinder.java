@@ -24,27 +24,27 @@ public class MyPosFinder {
         int height = image.getHeight();
 
         int[] ret = {0, 0};
-        int maxX=Integer.MIN_VALUE;
-        int minX=Integer.MAX_VALUE;
-        int maxY=Integer.MIN_VALUE;
-        int minY=Integer.MAX_VALUE;
+        int maxX = Integer.MIN_VALUE;
+        int minX = Integer.MAX_VALUE;
+        int maxY = Integer.MIN_VALUE;
+        int minY = Integer.MAX_VALUE;
         for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height*3/4; j++) {
+            for (int j = height / 4; j < height * 3 / 4; j++) {
                 int pixel = image.getRGB(i, j);
                 int r = (pixel & 0xff0000) >> 16;
                 int g = (pixel & 0xff00) >> 8;
                 int b = (pixel & 0xff);
                 if (ToleranceHelper.match(r, g, b, R_TARGET, G_TARGET, B_TARGET, 16) && j > ret[1]) {
-                    maxX=Integer.max(maxX, i);
-                    minX=Integer.min(minX, i);
-                    maxY=Integer.max(maxY, j);
-                    minY=Integer.min(minY, j);
+                    maxX = Integer.max(maxX, i);
+                    minX = Integer.min(minX, i);
+                    maxY = Integer.max(maxY, j);
+                    minY = Integer.min(minY, j);
                 }
             }
         }
-        ret[0]=(maxX+minX)/2;
-        ret[1]=maxY;
-        System.out.println(maxX+", "+minX);
+        ret[0] = (maxX + minX) / 2;
+        ret[1] = maxY;
+        System.out.println(maxX + ", " + minX);
         System.out.println("pos, x: " + ret[0] + ", y: " + ret[1]);
         return ret;
     }
@@ -57,15 +57,17 @@ public class MyPosFinder {
         String imgsDesc = root + "imgs/my_pos";
         File srcDir = new File(imgsSrc);
         System.out.println(srcDir);
+        long cost = 0;
         for (File file : srcDir.listFiles()) {
-
-            if(!file.getName().endsWith(".png")){
+            if (!file.getName().endsWith(".png")) {
                 continue;
             }
             System.out.println(file);
             BufferedImage img = ImgLoader.load(file.getAbsolutePath());
+            long t1 = System.nanoTime();
             int[] pos = t.find(img);
-
+            long t2 = System.nanoTime();
+            cost += (t2 - t1);
             BufferedImage desc = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
             desc.getGraphics().drawImage(img, 0, 0, img.getWidth(), img.getHeight(), null); // 绘制缩小后的图
             desc.getGraphics().drawRect(pos[0] - 5, pos[1] - 5, 10, 10);
@@ -76,6 +78,7 @@ public class MyPosFinder {
             }
             ImageIO.write(desc, "png", descFile);
         }
+        System.out.println("avg time cost: " + (cost / srcDir.listFiles().length / 1_000_000));
 
     }
 }
