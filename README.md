@@ -2,6 +2,8 @@
 
 ## 一. 效果展示
 
+为了更好的展示运行效果，我贴一个刚刚录制的视频。http://v.youku.com/v_show/id_XMzI4NzM4MzI0NA==.html?spm=a2h0k.8191407.0.0&from=s1.8-1-1.2
+
 ![](img/1.jpg)
 ![](img/2.png)
 ![](img/5.gif)
