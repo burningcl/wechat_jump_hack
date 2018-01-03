@@ -59,7 +59,7 @@ public class Hack {
                             }
                         }
                         System.out.println("find nextCenter, succ, (" + centerX + ", " + centerY + ")");
-                        int distance = (int) (Math.sqrt((centerX - myPos[0]) * (centerX - myPos[0]) + (centerY - myPos[1]) * (centerY - myPos[1])) * 1.392);
+                        int distance = (int) (Math.sqrt((centerX - myPos[0]) * (centerX - myPos[0]) + (centerY - myPos[1]) * (centerY - myPos[1])) * 1.385);
                         System.out.println("distance: " + distance);
                         System.out.println(ADB_PATH + " shell input swipe 100 100 100 100 " + distance);
                         Runtime.getRuntime().exec(ADB_PATH + " shell input swipe 300 300 400 400 " + distance);
@@ -74,7 +74,7 @@ public class Hack {
                 break;
             }
             try {
-                Thread.sleep(3_000);
+                Thread.sleep(4_000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
