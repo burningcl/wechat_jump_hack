@@ -11,8 +11,13 @@ public class Hack {
 
     static final String ADB_PATH = "/Users/chenliang/Library/Android/sdk/platform-tools/adb";
 
+    /**
+     * 弹跳系数，如果是720分辨率，请修改为2.05来试试。
+     */
+    static final float JUMP_RATIO = 1.385f;
+
     public static void main(String... strings) {
-        //System.out.print(Math.sqrt(4));
+
         String root = Hack.class.getResource("/").getPath();
         System.out.println("root: " + root);
         File srcDir = new File(root, "imgs/input");
@@ -59,7 +64,7 @@ public class Hack {
                             }
                         }
                         System.out.println("find nextCenter, succ, (" + centerX + ", " + centerY + ")");
-                        int distance = (int) (Math.sqrt((centerX - myPos[0]) * (centerX - myPos[0]) + (centerY - myPos[1]) * (centerY - myPos[1])) * 1.385);
+                        int distance = (int) (Math.sqrt((centerX - myPos[0]) * (centerX - myPos[0]) + (centerY - myPos[1]) * (centerY - myPos[1])) * JUMP_RATIO);
                         System.out.println("distance: " + distance);
                         System.out.println(ADB_PATH + " shell input swipe 400 400 400 400 " + distance);
                         Runtime.getRuntime().exec(ADB_PATH + " shell input swipe 300 300 400 400 " + distance);
