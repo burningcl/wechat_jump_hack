@@ -155,7 +155,7 @@ public class NextCenterFinder {
     }
 
     public static void main(String... strings) throws IOException {
-        int[] excepted = {0, 0};
+      //  int[] excepted = {0, 0};
         NextCenterFinder t = new NextCenterFinder();
         String root = t.getClass().getResource("/").getPath();
         System.out.println("root: " + root);
@@ -163,12 +163,15 @@ public class NextCenterFinder {
         String imgsDesc = root + "imgs/next_center";
         File srcDir = new File(imgsSrc);
         System.out.println(srcDir);
+        MyPosFinder myPosFinder=new MyPosFinder();
         long cost = 0;
         for (File file : srcDir.listFiles()) {
             System.out.println(file);
             BufferedImage img = ImgLoader.load(file.getAbsolutePath());
             long t1 = System.nanoTime();
-            int[] pos = t.find(img, excepted, 2000);
+            int[] myPos= myPosFinder.find(img);
+            int[] excepted = {myPos[0] - 35, myPos[0] + 35};
+            int[] pos = t.find(img, excepted, myPos[1]);
             long t2 = System.nanoTime();
             cost += (t2 - t1);
             BufferedImage desc = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);

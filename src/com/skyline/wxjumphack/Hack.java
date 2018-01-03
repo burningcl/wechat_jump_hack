@@ -2,6 +2,7 @@ package com.skyline.wxjumphack;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Random;
 
 /**
  * Created by chenliang on 2018/1/1.
@@ -14,7 +15,7 @@ public class Hack {
     /**
      * 弹跳系数，如果是720分辨率，请修改为2.05来试试。
      */
-    static final double JUMP_RATIO = 1.383f;
+    static final double JUMP_RATIO = 1.385f;
 
     public static void main(String... strings) {
 
@@ -26,6 +27,7 @@ public class Hack {
         MyPosFinder myPosFinder = new MyPosFinder();
         NextCenterFinder nextCenterFinder = new NextCenterFinder();
         WhitePointFinder whitePointFinder = new WhitePointFinder();
+        Random random=new Random();
         double jumpRatio = 0;
         for (int i = 0; i < 2048; i++) {
             try {
@@ -46,7 +48,7 @@ public class Hack {
                 int[] myPos = myPosFinder.find(image);
                 if (myPos != null) {
                     System.out.println("find myPos, succ, (" + myPos[0] + ", " + myPos[1] + ")");
-                    int[] excepted = {myPos[0] - 30, myPos[0] + 30};
+                    int[] excepted = {myPos[0] - 35, myPos[0] + 35};
                     int[] nextCenter = nextCenterFinder.find(image, excepted, myPos[1]);
                     if (nextCenter == null || nextCenter[0] == 0) {
                         System.err.println("find nextCenter, fail");
@@ -82,7 +84,7 @@ public class Hack {
                 break;
             }
             try {
-                Thread.sleep(4_000);
+                Thread.sleep(4_000 );
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
