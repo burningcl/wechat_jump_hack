@@ -33,9 +33,9 @@ public class Hack {
                     file.deleteOnExit();
                 }
                 Runtime.getRuntime().exec(ADB_PATH + " shell /system/bin/screencap -p /sdcard/screenshot.png");
-                Thread.sleep(800);
+                Thread.sleep(1_000);
                 Runtime.getRuntime().exec(ADB_PATH + " pull /sdcard/screenshot.png " + file.getAbsolutePath());
-                Thread.sleep(800);
+                Thread.sleep(1_000);
 
                 System.out.println("screenshot, file: " + file.getAbsolutePath());
                 BufferedImage image = ImgLoader.load(file.getAbsolutePath());
