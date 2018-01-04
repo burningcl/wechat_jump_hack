@@ -1,5 +1,53 @@
 # 腾讯微信跳一跳破解（目前最高19844分）
 
+## 2018/01/04优化
+
+根据同学们的反馈，我今天午休时，抽了20分钟，优化了一下算法。
+ 
+1. 提高瓶子的识别率。
+
+	由于瓶子的颜色比较接近，新实现了一种算法用于瓶子的瓶盖的识别。效果如下：
+	
+	![](img/6.png)
+
+2. 提高出现特殊盒子时，下步的计算。
+
+	特殊盒子，例如留声机，他的动效时间很长，而且很大，对下一步的识别产生干扰。因此，改进了一下算法，减少干扰的影响。效果如下：
+	
+	![](img/7.png)
+	
+3. 新增加了HackTest.java文件。大家在运行Hack.java后，会在`wechat_jump_hack/out/production/wechat_jump_hack/imgs/input/`目录下存放截图文件。运行Hack.java结束后，再运行HackTest.java，会在`wechat_jump_hack/out/production/wechat_jump_hack/imgs/output/`下生成input目录中的截图的位置标记。
+
+	![](img/9.png)
+	
+	* 红点表示玩家位置；
+	* 绿点表示下一个盒子的边界点；
+	* 蓝点表示下一个盒子的中心点；
+
+	如果觉得跳得不准的同学，请运行HackTest.java文件，观察标记的位置是否准确。如果准确的话，请自行调整弹跳系数。笔者无法做到我所用的弹跳系数适用于所有的设备。
+
+4. 添加对命中中心点的统计
+
+	```
+	screenshot, file: /Users/chenliang/SkylineProjects/wechat_jump_hack_1/out/production/wechat_jump_hack_1/imgs/input/1092.png
+	438, 364
+	pos, x: 404, y: 1104
+	find myPos, succ, (404, 1104)
+	191, 217, 194
+	232, 258, 266
+	top, x: 732, y: 803
+	true
+	left, x: 599, y: 880
+	right, x: 868, y: 880
+	whitePoint: 752, 715, 887, 866
+	find whitePoint, succ, (733, 876), centerHit: 901, total: 1093
+	find nextCenter, succ, (733, 876)
+	distance: 554
+	/Users/chenliang/Library/Android/sdk/platform-tools/adb shell input swipe 400 400 400 400 554
+	```
+	
+	根据我的运行结果，命中中心点的概率，大约为82%~85%。
+
 ## 一. 效果展示
 
 程序控制小人自动跳，几乎每次命中中心点。
@@ -9,7 +57,6 @@
 如果你的运行效果，不像这个视频中所示，请一定要认真阅读“温馨提示”这个章节。
 
 欢迎大家与我交流意见。破解过程，总共花了3个小时，不断地调整算法与参数，因此代码比较乱，还请见谅。
-
 
 ![](img/1.jpg)
 ![](img/2.png)
