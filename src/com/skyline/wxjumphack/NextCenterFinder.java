@@ -15,8 +15,9 @@ import java.util.Queue;
  */
 public class NextCenterFinder {
 
+    BottleFinder bottleFinder = new BottleFinder();
 
-    public int[] find(BufferedImage image, int[] exceptedX, int maxY) {
+    public int[] find(BufferedImage image, int[] myPos) {
         if (image == null) {
             return null;
         }
@@ -58,9 +59,11 @@ public class NextCenterFinder {
         int[] ret = new int[6];
         int targetR = 0, targetG = 0, targetB = 0;
         boolean found = false;
-        for (int j = height / 4; j < maxY; j++) {
+        for (int j = height / 4; j < myPos[1]; j++) {
             for (int i = 0; i < width; i++) {
-                if (i >= exceptedX[0] && i <= exceptedX[1]) {
+                int dx = Math.abs(i - myPos[0]);
+                int dy = Math.abs(j - myPos[1]);
+                if (dy > dx) {
                     continue;
                 }
                 pixel = image.getRGB(i, j);
@@ -89,6 +92,10 @@ public class NextCenterFinder {
             }
         }
 
+        if (targetR == BottleFinder.TARGET && targetG == BottleFinder.TARGET && targetB == BottleFinder.TARGET) {
+            return bottleFinder.find(image, ret[0], ret[1]);
+        }
+
         boolean[][] matchMap = new boolean[width][height];
         boolean[][] vMap = new boolean[width][height];
         ret[2] = Integer.MAX_VALUE;
@@ -102,10 +109,12 @@ public class NextCenterFinder {
             int[] item = queue.poll();
             int i = item[0];
             int j = item[1];
-            if (i >= exceptedX[0] && i <= exceptedX[1]) {
-                continue;
-            }
-            if (j >= maxY) {
+//            int dx = Math.abs(i - myPos[0]);
+//            int dy = Math.abs(j - myPos[1]);
+//            if (dy > dx) {
+//                continue;
+//            }
+            if (j >= myPos[1]) {
                 continue;
             }
 
@@ -136,6 +145,10 @@ public class NextCenterFinder {
                     ret[4] = i;
                     ret[5] = j;
                 }
+                if (j < ret[1]) {
+                    ret[0] = i;
+                    ret[1] = j;
+                }
                 queue.add(buildArray(i - 1, j));
                 queue.add(buildArray(i + 1, j));
                 queue.add(buildArray(i, j - 1));
@@ -155,7 +168,7 @@ public class NextCenterFinder {
     }
 
     public static void main(String... strings) throws IOException {
-      //  int[] excepted = {0, 0};
+        //  int[] excepted = {0, 0};
         NextCenterFinder t = new NextCenterFinder();
         String root = t.getClass().getResource("/").getPath();
         System.out.println("root: " + root);
@@ -163,15 +176,14 @@ public class NextCenterFinder {
         String imgsDesc = root + "imgs/next_center";
         File srcDir = new File(imgsSrc);
         System.out.println(srcDir);
-        MyPosFinder myPosFinder=new MyPosFinder();
+        MyPosFinder myPosFinder = new MyPosFinder();
         long cost = 0;
         for (File file : srcDir.listFiles()) {
             System.out.println(file);
             BufferedImage img = ImgLoader.load(file.getAbsolutePath());
             long t1 = System.nanoTime();
-            int[] myPos= myPosFinder.find(img);
-            int[] excepted = {myPos[0] - 35, myPos[0] + 35};
-            int[] pos = t.find(img, excepted, myPos[1]);
+            int[] myPos = myPosFinder.find(img);
+            int[] pos = t.find(img, myPos);
             long t2 = System.nanoTime();
             cost += (t2 - t1);
             BufferedImage desc = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);

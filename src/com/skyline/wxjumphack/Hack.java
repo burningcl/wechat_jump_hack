@@ -2,7 +2,6 @@ package com.skyline.wxjumphack;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Random;
 
 /**
  * Created by chenliang on 2018/1/1.
@@ -13,7 +12,7 @@ public class Hack {
     static final String ADB_PATH = "/Users/chenliang/Library/Android/sdk/platform-tools/adb";
 
     /**
-     * 弹跳系数，如果是720分辨率，请修改为2.05来试试。
+     * 弹跳系数，现在已经会自动适应各种屏幕，请不要修改。
      */
     static final double JUMP_RATIO = 1.385f;
 
@@ -27,10 +26,12 @@ public class Hack {
         MyPosFinder myPosFinder = new MyPosFinder();
         NextCenterFinder nextCenterFinder = new NextCenterFinder();
         WhitePointFinder whitePointFinder = new WhitePointFinder();
-        Random random=new Random();
+        int total = 0;
+        int centerHit = 0;
         double jumpRatio = 0;
-        for (int i = 0; i < 2048; i++) {
+        for (int i = 0; i < 5000; i++) {
             try {
+                total++;
                 File file = new File(srcDir, i + ".png");
                 if (file.exists()) {
                     file.deleteOnExit();
@@ -48,8 +49,7 @@ public class Hack {
                 int[] myPos = myPosFinder.find(image);
                 if (myPos != null) {
                     System.out.println("find myPos, succ, (" + myPos[0] + ", " + myPos[1] + ")");
-                    int[] excepted = {myPos[0] - 35, myPos[0] + 35};
-                    int[] nextCenter = nextCenterFinder.find(image, excepted, myPos[1]);
+                    int[] nextCenter = nextCenterFinder.find(image, myPos);
                     if (nextCenter == null || nextCenter[0] == 0) {
                         System.err.println("find nextCenter, fail");
                         break;
@@ -59,7 +59,8 @@ public class Hack {
                         if (whitePoint != null) {
                             centerX = whitePoint[0];
                             centerY = whitePoint[1];
-                            System.out.println("find whitePoint, succ, (" + centerX + ", " + centerY + ")");
+                            centerHit++;
+                            System.out.println("find whitePoint, succ, (" + centerX + ", " + centerY + "), centerHit: " + centerHit+ ", total: " + total);
                         } else {
                             if (nextCenter[2] != Integer.MAX_VALUE && nextCenter[4] != Integer.MIN_VALUE) {
                                 centerX = (nextCenter[2] + nextCenter[4]) / 2;
@@ -84,13 +85,13 @@ public class Hack {
                 break;
             }
             try {
-                Thread.sleep(4_000 );
+                Thread.sleep(4_000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
         }
-
+        System.out.println("centerHit: " + centerHit + ", total: " + total);
     }
 
 }
