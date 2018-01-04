@@ -118,7 +118,7 @@ public class NextCenterFinder {
                 continue;
             }
 
-            if (i < Integer.max(ret[0] - 200, 0) || i >= Integer.min(ret[0] + 200, width) || j < Integer.max(0, ret[1] - 300) || j >= Integer.max(height, ret[1] + 300) || vMap[i][j]) {
+            if (i < Integer.max(ret[0] - 300, 0) || i >= Integer.min(ret[0] + 300, width) || j < Integer.max(0, ret[1] - 400) || j >= Integer.max(height, ret[1] + 400) || vMap[i][j]) {
                 continue;
             }
             vMap[i][j] = true;
