@@ -50,7 +50,7 @@
 	![](img/project_struct.png)
 
 5. 准备好一部已经打开开发者模式的Android手机；
-6. 请确认是否adb已经联接上你的手机；如果adb连接失败，则会导致截图与拉取截图失败，提示“find myPos, fail”；如果连着多个Android设备的话，最好关到只有一个；
+6. 请确认是否adb已经联接上你的手机；如果adb连接失败，则会导致截图与拉取截图失败，提示“find myPos, fail”或者“找不到0.jpg”；如果连着多个Android设备的话，最好关到只有一个；
 	
 	运行命令`./adb devices`。如果结果如下，则说明adb连上了。
 	
