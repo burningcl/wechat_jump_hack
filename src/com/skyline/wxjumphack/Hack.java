@@ -7,8 +7,13 @@ import java.io.File;
  * Created by chenliang on 2018/1/1.
  */
 public class Hack {
-
-
+    /**
+     * 生成随机数，避免固定间隔检测
+     */
+    public static int getRandom(int min,int max){
+        Random random = new Random();
+        return random.nextInt(max)%(max-min+1) + min;
+    }
     static final String ADB_PATH = "/Users/chenliang/Library/Android/sdk/platform-tools/adb";
 
     /**
@@ -85,7 +90,7 @@ public class Hack {
                 break;
             }
             try {
-                Thread.sleep(4_000);
+                 Thread.sleep(getRandom(4000,9000));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
