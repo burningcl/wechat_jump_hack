@@ -15,7 +15,7 @@ public class Hack {
     /**
      * 弹跳系数，现在已经会自动适应各种屏幕，请不要修改。
      */
-    static final double JUMP_RATIO = 1.385f;
+    static final double JUMP_RATIO = 1.390f;
 
     private static Random RANDOM = new Random();
 
