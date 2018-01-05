@@ -13,9 +13,9 @@
 		
 ## 笔者将以Intellij为例，说明如何导入项目：
 
-1. 准备Java运行与编译环境，使用Java8以上
-2. 安装Android SDK
-3. 使用 git工具clone项目，地址为 https://github.com/burningcl/wechat_jump_hack
+1. 准备Java运行与编译环境，使用Java8以上，[参考链接](https://www.jianshu.com/p/0b240b541039)
+2. 安装Android SDK，[参考链接](https://www.jianshu.com/p/4ac1313b50cb)
+3. 使用 [git工具](https://www.jianshu.com/p/6a3332117efb)clone项目，地址为 https://github.com/burningcl/wechat_jump_hack
 
 	运行命令
 	
@@ -52,7 +52,7 @@
 5. 准备好一部已经打开开发者模式的Android手机；
 6. 请确认是否adb已经联接上你的手机；如果adb连接失败，则会导致截图与拉取截图失败，提示“find myPos, fail”或者“找不到0.jpg”；如果连着多个Android设备的话，最好关到只有一个；
 	
-	运行命令`./adb devices`。如果结果如下，则说明adb连上了。
+	运行命令`./adb devices`(windows环境下运行 adb devices，需要配置好环境变量)。如果结果如下，则说明adb连上了。
 	
 	```
 	chenliangdeMacBook-Pro:platform-tools chenliang$ ./adb devices
