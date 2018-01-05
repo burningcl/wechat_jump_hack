@@ -43,6 +43,18 @@ public class Hack {
                 process = Runtime.getRuntime().exec(ADB_PATH + " pull /sdcard/screenshot.png " + file.getAbsolutePath());
                 process.waitFor();
 
+                while (true){
+                    if(file.exists()){
+                        break;
+                    }else {
+                        System.out.println("screenshot not exists.revisiting the screenshot");
+                        Runtime.getRuntime().exec(ADB_PATH + " shell /system/bin/screencap -p /sdcard/screenshot.png");
+                        Thread.sleep(1_000);
+                        Runtime.getRuntime().exec(ADB_PATH + " pull /sdcard/screenshot.png " + file.getAbsolutePath());
+                        Thread.sleep(1_000);
+                    }
+                }
+                
                 System.out.println("screenshot, file: " + file.getAbsolutePath());
                 BufferedImage image = ImgLoader.load(file.getAbsolutePath());
                 if (jumpRatio == 0) {
