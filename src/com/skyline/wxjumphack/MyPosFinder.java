@@ -34,7 +34,7 @@ public class MyPosFinder {
                 int r = (pixel & 0xff0000) >> 16;
                 int g = (pixel & 0xff00) >> 8;
                 int b = (pixel & 0xff);
-                if (ToleranceHelper.match(r, g, b, R_TARGET, G_TARGET, B_TARGET, 16) && j > ret[1]) {
+                if (ToleranceHelper.match(r, g, b, R_TARGET, G_TARGET, B_TARGET, 16)) {
                     maxX = Integer.max(maxX, i);
                     minX = Integer.min(minX, i);
                     maxY = Integer.max(maxY, j);
