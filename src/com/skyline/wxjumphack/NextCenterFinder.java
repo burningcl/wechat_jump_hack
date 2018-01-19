@@ -72,10 +72,11 @@ public class NextCenterFinder {
                 int b = (pixel & 0xff);
                 if (r < minR || r > maxR || g < minG || g > maxG || b < minB || b > maxB) {
                     ret[0] = i;
-                    ret[1] = j;
+                    ret[1] = ++j;
                     System.out.println("top, x: " + i + ", y: " + j);
                     for (int k = 0; k < 5; k++) {
                         pixel = image.getRGB(i, j + k);
+                        System.out.println(pixel);
                         targetR += (pixel & 0xff0000) >> 16;
                         targetG += (pixel & 0xff00) >> 8;
                         targetB += (pixel & 0xff);
@@ -127,9 +128,9 @@ public class NextCenterFinder {
             int g = (pixel & 0xff00) >> 8;
             int b = (pixel & 0xff);
             matchMap[i][j] = ToleranceHelper.match(r, g, b, targetR, targetG, targetB, 16);
-            if (i == ret[0] && j == ret[1]) {
-                System.out.println(matchMap[i][j]);
-            }
+//            if (i == ret[0] && j == ret[1]) {
+//                System.out.println(matchMap[i][j]);
+//            }
             if (matchMap[i][j]) {
                 if (i < ret[2]) {
                     ret[2] = i;
