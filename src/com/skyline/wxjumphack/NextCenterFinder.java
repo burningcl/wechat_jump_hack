@@ -71,8 +71,9 @@ public class NextCenterFinder {
                 int g = (pixel & 0xff00) >> 8;
                 int b = (pixel & 0xff);
                 if (r < minR || r > maxR || g < minG || g > maxG || b < minB || b > maxB) {
+                    j = j + 2;
                     ret[0] = i;
-                    ret[1] = ++j;
+                    ret[1] = j;
                     System.out.println("top, x: " + i + ", y: " + j);
                     for (int k = 0; k < 5; k++) {
                         pixel = image.getRGB(i, j + k);
